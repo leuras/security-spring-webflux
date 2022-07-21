@@ -1,0 +1,28 @@
+version: "3"
+services:
+    vault:
+        build: .
+        image: vault:latest
+        environment:
+            - VAULT_DEV_ROOT_TOKEN_ID=${TOKEN}
+        ports:
+            - 8000:8200
+        cap_add:
+            - IPC_LOCK
+        
+    vault-setup:
+        build: .
+        image: debian:stable-slim
+        links: 
+            - "vault"
+        restart: "no"
+        environment:
+            - VAULT_ADDR=http://vault:8200
+            - VAULT_TOKEN=${TOKEN}
+            - DEFAULT_DB_USER=${DEFAULT_DB_USER}
+            - DEFAULT_DB_PASS=${DEFAULT_DB_PASS}
+        depends_on:
+            - vault
+        volumes:
+            - ./vault/bin:/vault/bin
+        command: ["/bin/sh", "/vault/bin/init-secrets"]
