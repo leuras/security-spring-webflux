@@ -1,44 +1,24 @@
 version: "3"
 services:
-    vault:
-        build: .
-        image: vault:latest
-        environment:
-            - VAULT_DEV_ROOT_TOKEN_ID=${TOKEN}
-        ports:
-            - 8000:8200
-        cap_add:
-            - IPC_LOCK
-                
-    vault-setup:
-        build: .
-        image: vault:latest
-        links: 
-            - "vault"
-        restart: "no"
-        environment:
-            - VAULT_ADDR=http://vault:8200
-            - VAULT_TOKEN=${TOKEN}
-            - RO_DB_USER=${RO_DB_USER}
-            - RO_DB_PASS=${RO_DB_PASS}
-        depends_on:
-            - vault
-        volumes:
-            - ./vault/bin:/vault/bin
-        command: ["/bin/sh", "/vault/bin/init-secrets"]
-
     db:
         build: .
         image: postgres:alpine
         restart: always
         environment:
             - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-            - RO_DB_USER=${RO_DB_USER}
-            - RO_DB_PASS=${RO_DB_PASS}
-            - DDL_DB_USER=${DDL_DB_USER}
-            - DDL_DB_PASS=${DDL_DB_PASS}
+        secrets:
+            - ro-database
+            - rw-database
         ports:
             - 5432:5432
         volumes:
             - ./db/init-database.sh:/docker-entrypoint-initdb.d/init-database.sh
+
+secrets:
+    ro-database:
+        file: ./secrets/ro-database
+    rw-database:
+        file: ./secrets/rw-database
+    supplier-service:
+        file: ./secrets/supplier-service
             

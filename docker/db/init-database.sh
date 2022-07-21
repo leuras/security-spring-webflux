@@ -1,11 +1,21 @@
 #!/bin/bash
 set -e
 
+source <(cat /run/secrets/ro-database)
+
+RO_DB_USER="${DB_USER}"
+RO_DB_PASS="${DB_PASS}"
+
+source <(cat /run/secrets/rw-database)
+
+DDL_DB_USER="${DB_USER}"
+DDL_DB_PASS="${DB_PASS}"
+
 psql -U postgres -v ON_ERROR_STOP=1 <<-EOSQL
 	CREATE USER ${RO_DB_USER} WITH PASSWORD '${RO_DB_PASS}';
 	CREATE USER ${DDL_DB_USER} WITH PASSWORD '${DDL_DB_PASS}';
 
-	GRANT CONNECT ON DATABASE postgres TO ${RO_DB_USER};
+ 	GRANT CONNECT ON DATABASE postgres TO ${RO_DB_USER};
 	GRANT CONNECT ON DATABASE postgres TO ${DDL_DB_USER};
 
 	GRANT SELECT ON ALL TABLES IN SCHEMA public TO ${RO_DB_USER};
@@ -14,5 +24,3 @@ psql -U postgres -v ON_ERROR_STOP=1 <<-EOSQL
 	ALTER DEFAULT PRIVILEGES FOR ROLE ${DDL_DB_USER} IN SCHEMA public 
 		GRANT SELECT ON TABLES TO ${RO_DB_USER};
 EOSQL
-
-unset RO_DB_USER RO_DB_PASS DDL_DB_USER DDL_DB_PASS
