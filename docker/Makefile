@@ -11,8 +11,11 @@ stop: .env
 .env:
 	@@echo "Generating .env file"
 	@@echo "TOKEN=$(call generate_secret, 64)" > .env
-	@@echo "DEFAULT_DB_USER=challenge-app" >> .env
-	@@echo "DEFAULT_DB_PASS=$(call generate_secret, 16)" >> .env
+	@@echo "POSTGRES_PASSWORD=$(call generate_secret, 16)" >> .env
+	@@echo "RO_DB_USER=challenge_app_ro" >> .env
+	@@echo "RO_DB_PASS=$(call generate_secret, 16)" >> .env
+	@@echo "DDL_DB_USER=challenge_app_ddl" >> .env
+	@@echo "DDL_DB_PASS=$(call generate_secret, 16)" >> .env
 
 clean:
 	@@rm -f .env

@@ -19,10 +19,26 @@ services:
         environment:
             - VAULT_ADDR=http://vault:8200
             - VAULT_TOKEN=${TOKEN}
-            - DEFAULT_DB_USER=${DEFAULT_DB_USER}
-            - DEFAULT_DB_PASS=${DEFAULT_DB_PASS}
+            - RO_DB_USER=${RO_DB_USER}
+            - RO_DB_PASS=${RO_DB_PASS}
         depends_on:
             - vault
         volumes:
             - ./vault/bin:/vault/bin
         command: ["/bin/sh", "/vault/bin/init-secrets"]
+
+    db:
+        build: .
+        image: postgres:alpine
+        restart: always
+        environment:
+            - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+            - RO_DB_USER=${RO_DB_USER}
+            - RO_DB_PASS=${RO_DB_PASS}
+            - DDL_DB_USER=${DDL_DB_USER}
+            - DDL_DB_PASS=${DDL_DB_PASS}
+        ports:
+            - 5432:5432
+        volumes:
+            - ./db/init-database.sh:/docker-entrypoint-initdb.d/init-database.sh
+            
