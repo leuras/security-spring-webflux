@@ -1,0 +1,20 @@
+spring:
+  main:
+    web-application-type: NONE
+
+  r2dbc:
+    url: "r2dbc:postgresql://localhost:5432/postgres"
+    username: "${DB_USER}"
+    password: "${DB_PASS}"
+
+  flyway:
+    url: "jdbc:postgresql://localhost:5432/postgres"
+    user: "${DB_USER}"
+    password: "${DB_PASS}"
+    validate-on-migrate: true
+    enabled: true
+
+integration:
+  supplier:
+    url: "${SUPPLIER_URL}"
+    connection-timeout: 15000

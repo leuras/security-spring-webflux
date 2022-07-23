@@ -24,3 +24,5 @@ hs_err_pid*
 
 docker/.env
 docker/secrets/r*-database
+
+.vscode/*
