@@ -28,7 +28,12 @@ dependencies {
 	implementation("org.springframework:spring-jdbc")
 	implementation("org.postgresql:r2dbc-postgresql")
 	runtimeOnly("org.postgresql:postgresql")
-	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	testImplementation("org.springframework.boot:spring-boot-starter-test") {
+		exclude(module = "junit")
+		exclude(module = "mockito-core")
+	}
+	testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test")
+	testImplementation("io.mockk:mockk:1.12.4")
 	testImplementation("io.projectreactor:reactor-test")
 }
 
