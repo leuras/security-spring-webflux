@@ -1,0 +1,15 @@
+server:
+  port: 8001
+
+spring:
+  main:
+    lazy-initialization: true
+
+  data:
+    rest:
+      base-path: "/api"
+
+  r2dbc:
+    url: "r2dbc:postgresql://${DB_HOST:localhost}:5432/${DB_NAME:postgres}"
+    username: "${DB_USER}"
+    password: "${DB_PASS}"
