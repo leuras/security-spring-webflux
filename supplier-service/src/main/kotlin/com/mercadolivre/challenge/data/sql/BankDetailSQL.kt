@@ -10,7 +10,7 @@ object BankDetailSQL {
     """.trimIndent()
 
     val INSERT = """
-        INSERT INTO bank_detail (${COLUMNS}) 
+        INSERT INTO bank_detail ($COLUMNS) 
         VALUES (
             :customer_reference, 
             :account_number, 

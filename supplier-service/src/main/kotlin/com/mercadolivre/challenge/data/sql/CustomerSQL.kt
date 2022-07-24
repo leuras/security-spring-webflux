@@ -12,7 +12,7 @@ object CustomerSQL {
     """.trimIndent()
 
     val INSERT = """
-        INSERT INTO customer (${COLUMNS}) 
+        INSERT INTO customer ($COLUMNS) 
         VALUES (
             :customer_reference, 
             :external_id, 

@@ -11,7 +11,7 @@ object AddressSQL {
     """.trimIndent()
 
     val INSERT = """
-        INSERT INTO address (${COLUMNS}) 
+        INSERT INTO address ($COLUMNS) 
         VALUES (
             :customer_reference, 
             :address, 
