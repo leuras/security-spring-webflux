@@ -20,6 +20,6 @@ class CustomerImporterRunner(
         runBlocking {
             customerImporter.importAll()
         }
-        log.info("Stopping customer importer runner. The total time elapsed was ")
+        log.info("Stopping customer importer runner ")
     }
 }

@@ -5,10 +5,10 @@ import com.mercadolivre.challenge.entity.Customer
 import io.r2dbc.postgresql.codec.Point
 import org.springframework.r2dbc.core.DatabaseClient
 import org.springframework.r2dbc.core.await
-import org.springframework.stereotype.Component
+import org.springframework.stereotype.Repository
 import java.time.Instant
 
-@Component
+@Repository
 class AddressRepository(
     private val databaseClient: DatabaseClient
 ) : SQLRepository<Customer> {

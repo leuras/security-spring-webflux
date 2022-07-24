@@ -6,10 +6,10 @@ import com.mercadolivre.challenge.data.sql.CustomerSQL
 import com.mercadolivre.challenge.entity.Customer
 import org.springframework.r2dbc.core.DatabaseClient
 import org.springframework.r2dbc.core.await
-import org.springframework.stereotype.Component
+import org.springframework.stereotype.Repository
 import java.time.Instant
 
-@Component
+@Repository
 class CustomerRepository(
     private val databaseClient: DatabaseClient,
     private val objectMapper: ObjectMapper
