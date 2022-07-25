@@ -7,5 +7,6 @@ enum class ReasonCode (val code: String, val status: HttpStatus, val description
     GENERIC_ERROR(code = "01", HttpStatus.INTERNAL_SERVER_ERROR, description = "The application has encountered an unknown error. Please try again later or contact the administrator."),
 
     CUSTOMER_NOT_FOUND(code = "10", HttpStatus.NOT_FOUND, "There is no customer for the given customer reference."),
-    CUSTOMER_ADDRESS_NOT_FOUND(code = "11", HttpStatus.NOT_FOUND, "There is no address for the given customer reference.")
+    CUSTOMER_ADDRESS_NOT_FOUND(code = "11", HttpStatus.NOT_FOUND, "There is no address for the given customer reference."),
+    CUSTOMER_BANKING_DATA_NOT_FOUND(code = "12", HttpStatus.NOT_FOUND, "There is no bank information for the given customer reference.")
 }
