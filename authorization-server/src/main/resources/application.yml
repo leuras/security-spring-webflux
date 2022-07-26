@@ -1,0 +1,26 @@
+server:
+  port: 8000
+
+spring:
+  main:
+    lazy-initialization: true
+
+  r2dbc:
+    url: "r2dbc:postgresql://${DB_HOST:localhost}:5432/${DB_NAME:postgres}?currentSchema=authorization-server"
+    username: "${DB_USER}"
+    password: "${DB_PASS}"
+
+  flyway:
+    url: "jdbc:postgresql://${DB_HOST:localhost}:5432/${DB_NAME:postgres}"
+    default-schema: "authorization-server"
+    user: "${DB_USER}"
+    password: "${DB_PASS}"
+    validate-on-migrate: true
+    enabled: true
+
+challenge:
+  jwt:
+    algorithm:
+      secret: "${JWT_SECRET}"
+    access-token-expiration: 3600000
+    refresh-token-expiration: 86400000

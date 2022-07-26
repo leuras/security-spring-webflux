@@ -19,7 +19,7 @@ build:
 	@@echo "TOKEN=$(call generate_secret, 64)" > .env
 	@@echo "POSTGRES_PASSWORD=$(call generate_secret, 16)" >> .env
 
-secrets/ro-database secrets/rw-database:
+secrets/ro-database secrets/rw-database secrets/authorization-server:
 	@@mkdir -p secrets
 
 	@@echo "Generating secrets"
@@ -33,8 +33,17 @@ secrets/ro-database secrets/rw-database:
 	@@echo "DB_USER=challenge_app_ddl" >> secrets/rw-database
 	@@echo "DB_PASS=$(call generate_secret, 16)" >> secrets/rw-database
 
+	@@echo "DB_HOST=db" > secrets/authorization-server
+	@@echo "DB_NAME=postgres" >> secrets/authorization-server
+	@@echo "DB_USER=sts_app_ddl" >> secrets/authorization-server
+	@@echo "DB_PASS=$(call generate_secret, 16)" >> secrets/authorization-server
+
 clean:
-	@@rm -f .env secrets/ro-database secrets/rw-database
+	@@rm -f .env \
+		secrets/ro-database \
+		secrets/rw-database \
+		secrets/authorization-server
+		
 	@@../supplier-service/gradlew -p ../supplier-service clean
 
 generate_secret = $(shell tr -dc A-Za-z0-9_@^!+- < /dev/urandom | head -c $(1) | xargs)
