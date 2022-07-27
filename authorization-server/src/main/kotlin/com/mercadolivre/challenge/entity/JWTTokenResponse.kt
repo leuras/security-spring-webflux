@@ -2,9 +2,9 @@ package com.mercadolivre.challenge.entity
 
 import java.time.Instant
 
-data class AccessTokenResponse(
+data class JWTTokenResponse(
     val accessToken: String,
-    val refreshToken: String,
     val expiresAt: Instant,
+    val refreshToken: String,
     val refreshTokenExpiresAt: Instant
 )

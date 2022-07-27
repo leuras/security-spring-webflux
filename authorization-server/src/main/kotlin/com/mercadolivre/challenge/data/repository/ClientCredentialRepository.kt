@@ -8,7 +8,6 @@ import com.mercadolivre.challenge.entity.ClientCredentials
 import io.r2dbc.postgresql.codec.Json
 import io.r2dbc.spi.Row
 import org.springframework.r2dbc.core.DatabaseClient
-import org.springframework.r2dbc.core.awaitSingleOrNull
 import org.springframework.stereotype.Repository
 import reactor.core.publisher.Mono
 import java.time.Instant
@@ -35,5 +34,4 @@ class ClientCredentialRepository(
         createdAt = row.get("created_at", Instant::class.java)!!,
         updatedAt = row.get("updated_at", Instant::class.java)
     )
-
 }

@@ -1,7 +1,8 @@
 package com.mercadolivre.challenge.web.endpoint
 
+import com.mercadolivre.challenge.business.extension.toResponse
 import com.mercadolivre.challenge.business.service.JWTIssuerService
-import com.mercadolivre.challenge.entity.AccessTokenResponse
+import com.mercadolivre.challenge.entity.ReasonCode
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
@@ -18,13 +19,23 @@ class AuthorizationServerHandler(
     private val log = LoggerFactory.getLogger(AuthorizationServerHandler::class.java)
 
     suspend fun login(request: ServerRequest): ServerResponse {
+        return try {
+            log.info("[${request.method()!!.name}] --- ${request.requestPath()}")
 
-        log.info("[${request.method()!!.name}] --- ${request.requestPath()}")
+            val response = this.jwtIssuerService.issue()
 
-        val response = this.jwtIssuerService.issue()
+            ServerResponse.status(HttpStatus.CREATED)
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValueAndAwait(response)
 
-        return ServerResponse.status(HttpStatus.CREATED)
-            .contentType(MediaType.APPLICATION_JSON)
-            .bodyValueAndAwait(response)
+        } catch (t: Throwable) {
+            log.error("Failed to generate JWT access token due to: ${t.message}")
+
+            val reason = ReasonCode.GENERIC_ERROR
+
+            ServerResponse.status(reason.status)
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValueAndAwait(reason.toResponse())
+        }
     }
 }

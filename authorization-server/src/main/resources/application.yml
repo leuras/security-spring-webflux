@@ -2,8 +2,6 @@ server:
   port: 8000
 
 spring:
-  main:
-    lazy-initialization: true
 
   r2dbc:
     url: "r2dbc:postgresql://${DB_HOST:localhost}:5432/${DB_NAME:postgres}?currentSchema=authorization-server"
@@ -13,8 +11,8 @@ spring:
   flyway:
     url: "jdbc:postgresql://${DB_HOST:localhost}:5432/${DB_NAME:postgres}"
     default-schema: "authorization-server"
-    user: "${DB_USER}"
-    password: "${DB_PASS}"
+    user: "${DB_USER:sts_app_ddl}"
+    password: "${DB_PASS:D42NBL3g2GoQnmE-}"
     validate-on-migrate: true
     enabled: true
 
