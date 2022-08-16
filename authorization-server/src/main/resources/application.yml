@@ -4,21 +4,23 @@ server:
 spring:
 
   r2dbc:
-    url: "r2dbc:postgresql://${DB_HOST:localhost}:5432/${DB_NAME:postgres}?currentSchema=authorization-server"
+    url: "r2dbc:postgresql://${DB_HOST}:5432/${DB_NAME}?currentSchema=authorization-server"
     username: "${DB_USER}"
     password: "${DB_PASS}"
 
   flyway:
-    url: "jdbc:postgresql://${DB_HOST:localhost}:5432/${DB_NAME:postgres}"
+    url: "jdbc:postgresql://${DB_HOST}:5432/${DB_NAME}"
     default-schema: "authorization-server"
-    user: "${DB_USER:sts_app_ddl}"
-    password: "${DB_PASS:D42NBL3g2GoQnmE-}"
+    user: "${DB_USER}"
+    password: "${DB_PASS}"
     validate-on-migrate: true
     enabled: true
 
-challenge:
+leuras:
   jwt:
-    algorithm:
-      secret: "${JWT_SECRET}"
-    access-token-expiration: 3600000
-    refresh-token-expiration: 86400000
+    access-token:
+      secret: "${ACCESS_TOKEN_SECRET}"
+      expiration: 3600000 # 1 hour
+    refresh-token:
+      secret: "${REFRESH_TOKEN_SECRET}"
+      expiration: 5184000000 # 60 days

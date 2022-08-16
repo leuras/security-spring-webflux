@@ -23,6 +23,7 @@ secrets/ro-database secrets/rw-database secrets/authorization-server:
 	@@mkdir -p secrets
 
 	@@echo "Generating secrets"
+
 	@@echo "DB_HOST=db" > secrets/ro-database
 	@@echo "DB_NAME=postgres" >> secrets/ro-database
 	@@echo "DB_USER=challenge_app_ro" >> secrets/ro-database
@@ -37,6 +38,8 @@ secrets/ro-database secrets/rw-database secrets/authorization-server:
 	@@echo "DB_NAME=postgres" >> secrets/authorization-server
 	@@echo "DB_USER=sts_app_ddl" >> secrets/authorization-server
 	@@echo "DB_PASS=$(call generate_secret, 16)" >> secrets/authorization-server
+	@@echo "ACCESS_TOKEN_SECRET=$(call generate_secret, 16)" >> secrets/authorization-server
+	@@echo "REFRESH_TOKEN_SECRET=$(call generate_secret, 16)" >> secrets/authorization-server
 
 clean:
 	@@rm -f .env \
