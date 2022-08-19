@@ -39,7 +39,7 @@ class JWTService(private val config: JWTProperties) {
         return JWT.require(algorithm)
             .build()
             .verify(token)
-            .takeIf { JWTTokenBuilder.ISSUER == it.issuer }
+            .takeIf { JWTTokenBuilder.DEFAULT_ISSUER == it.issuer }
             ?: throw ReasonCodeException(ReasonCode.ISSUER_NOT_RECOGNIZED)
     }
 

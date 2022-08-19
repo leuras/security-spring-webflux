@@ -16,7 +16,7 @@ class JWTTokenBuilder(principal: User) {
     private var issuer: String? = null
 
     companion object {
-        const val ISSUER = "authorization-server.leuras.com.br"
+        const val DEFAULT_ISSUER = "authorization-server.leuras.com.br"
     }
 
     fun accessToken(): TokenDefinition = this.accessToken
@@ -24,7 +24,7 @@ class JWTTokenBuilder(principal: User) {
     fun refreshToken(): TokenDefinition = this.refreshToken
 
     fun withDefaultIssuer(): JWTTokenBuilder {
-        this.issuer = ISSUER
+        this.issuer = DEFAULT_ISSUER
 
         return this
     }

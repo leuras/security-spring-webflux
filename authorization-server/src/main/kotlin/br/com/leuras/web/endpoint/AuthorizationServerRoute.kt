@@ -12,6 +12,9 @@ class AuthorizationServerRoute {
         path("/").nest {
             POST("login", handler::login)
             GET("refresh-access-token", handler::refreshAccessToken)
+            path("/api").nest {
+                POST("/clients", handler::create)
+            }
         }
     }
 }
